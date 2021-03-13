@@ -1,6 +1,9 @@
 
 const uri = 'http://localhost:8000' ; 
 
+/**
+ * fetch list of items in the specified page
+ */
 export const fetchItems = async (path) => {
 
     var params = new URLSearchParams();
@@ -18,6 +21,10 @@ export const fetchItems = async (path) => {
     })
 }
 
+/**
+ * get the average cubic weight of all air conditioners
+ * in all pages
+ */
 export const fetchAvgCubicWeight = async () => {
 
     return await new Promise((resolve, reject) => {

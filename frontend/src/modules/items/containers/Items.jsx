@@ -14,6 +14,9 @@ var Items =  (props) => {
     getItems(path) ; 
   }, []);
 
+  /**
+   * fetch item from api then set the new path and item data
+   */
   const getItems = (newPath) => {
     props.setLoadingState(true);
     fetchItems(newPath)

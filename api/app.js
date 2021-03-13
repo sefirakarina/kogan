@@ -4,6 +4,9 @@ var fetch = require("node-fetch");
 var app = express();
 
 
+/**
+ *  get items from external api
+ */
 const fetchItems = async (path) => {
 
     return await new Promise((resolve, reject) => {
@@ -20,6 +23,9 @@ const fetchItems = async (path) => {
 
 }
 
+/**
+ * calculate individual item's cubic weight
+ */
 const getCubicWeight = (item) =>{
     var height = item['size']['height'] ;
     var length = item['size']['length'] ;
@@ -28,6 +34,10 @@ const getCubicWeight = (item) =>{
     return ((height * length * width) / 1000000 ) * 250;
 }
 
+/**
+ * add cubic_weight to all air conditioners and calculate the 
+ * average cubic weight of the specified page
+ */
 const processData = (data) => {
     var airConCount = 0 ;
     var totalCubicWeight = 0;
@@ -42,7 +52,10 @@ const processData = (data) => {
     return data
 }
 
-
+/**
+ * recursively call fetchItems as long as
+ * the next page is not empty
+ */
 const getAllData = async (res, path, instances) =>{
 
     var data = await fetchItems(path) ; 
@@ -52,6 +65,10 @@ const getAllData = async (res, path, instances) =>{
     
 }
 
+/**
+ * call this route to get the average cubic 
+ * weight of all air cons in all pages
+ */
 app.get('/avg-cubic-weight/', cors(), async (req, res)  =>  {
 
 
@@ -69,7 +86,9 @@ app.get('/avg-cubic-weight/', cors(), async (req, res)  =>  {
     res.json({'avg_weight': totalCubicWeight/airCons.length}) ; 
 })
 
-
+/**
+ * route to get all items in the specified page
+ */
 app.get('/items/', cors(), async (req, res)  =>  {
 
     const data = await fetchItems(req.query.path) ;
